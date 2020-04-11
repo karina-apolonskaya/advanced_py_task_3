@@ -8,11 +8,6 @@ class Contact:
         self.chosen_contact = False
         self.info_additional = info_additional
 
-    def get_contact_dict(self):
-        add_info = {"Имя": self.name, "Фамилия": self.surname, "Телефонный номер": self.phone_number,
-                    "Избранный контакт": self.chosen_contact, "Дополнительная информация": self.info_additional}
-        return add_info
-
     def get_modified_contact(self):
         add_info = list()
         str_out = '\nДополнительная информация:'
@@ -31,11 +26,6 @@ class Contact:
         return self.get_modified_contact()
 
 
-person_1 = Contact('Jhon', 'Smith', '+71234567809', telegram='@jhony', email='jhony@smith.com')
-person_2 = Contact('Иван', 'Федоров', '+71234561015', telegram='@ivan', email='ivan@fedorov.com')
-print(person_1.get_modified_contact())
-print(person_2.get_modified_contact())
-
 class PhoneBook:
 
     phone_book = list()
@@ -43,8 +33,12 @@ class PhoneBook:
     def __init__(self, name):
         self.name = name
 
-    def add_contact(self, Contact):
-        self.phone_book.append(Contact.get_contact_dict())
+    def add_contact(self, contact):
+        contact_added = {"Имя": contact.name, "Фамилия": contact.surname,
+                         "Телефонный номер": contact.phone_number,
+                         "Избранный контакт": contact.chosen_contact,
+                         "Дополнительная информация": contact.info_additional}
+        self.phone_book.append(contact_added)
         return self.phone_book
 
     def display_contacts(self):
@@ -70,13 +64,17 @@ class PhoneBook:
         return find_contact_by_name_surname_list
 
 
-contact = PhoneBook("Коллеги")
-print(contact.add_contact(person_1))
-print(contact.add_contact(person_2))
-print(contact.display_contacts())
-print(contact.delete_contact('+71234561015'))
-print(contact.chosen_contact_search())
-print(contact.find_contact_by_name_surname("Jhon", "Smith"))
+person_1 = Contact('Jhon', 'Smith', '+71234567809', telegram='@jhony', email='jhony@smith.com')
+person_2 = Contact('Иван', 'Федоров', '+71234561015', telegram='@ivan', email='ivan@fedorov.com')
+print(person_1)
+print(person_2)
+phonebook = PhoneBook("Коллеги")
+print(phonebook.add_contact(person_1))
+print(phonebook.add_contact(person_2))
+print(phonebook.display_contacts())
+print(phonebook.delete_contact('+71234567809'))
+print(phonebook.chosen_contact_search())
+print(phonebook.find_contact_by_name_surname("Иван", "Федоров"))
 
 
 
