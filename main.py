@@ -28,53 +28,51 @@ class Contact:
 
 class PhoneBook:
 
-    phone_book = list()
+    phone_book = []
 
     def __init__(self, name):
         self.name = name
 
-    def add_contact(self, contact):
-        contact_added = {"Имя": contact.name, "Фамилия": contact.surname,
-                         "Телефонный номер": contact.phone_number,
-                         "Избранный контакт": contact.chosen_contact,
-                         "Дополнительная информация": contact.info_additional}
-        self.phone_book.append(contact_added)
+    def add_contact(self, name, surname, phone_number, **kwargs):
+        contact = Contact(name, surname, phone_number, **kwargs)
+        self.phone_book.append(contact)
         return self.phone_book
 
     def display_contacts(self):
-        return self.phone_book
+        for contact in self.phone_book:
+            print(contact)
 
     def delete_contact(self, phone_number):
-        for item in self.phone_book:
-            if item["Телефонный номер"] == phone_number:
-                self.phone_book.remove(item)
+        for person in self.phone_book:
+            if person.phone_number == phone_number:
+                self.phone_book.remove(person)
         return self.phone_book
 
     def chosen_contact_search(self):
         chosen_contact_list = list()
-        for item in self.phone_book:
-            chosen_contact_list.append(item["Избранный контакт"])
-        return chosen_contact_list
+        for person in self.phone_book:
+            chosen_contact_list.append(person.chosen_contact)
+        for contact in chosen_contact_list:
+            print(contact)
 
     def find_contact_by_name_surname(self, name, surname):
         find_contact_by_name_surname_list = list()
-        for item in self.phone_book:
-            if item["Имя"] == name and item["Фамилия"] == surname:
-                find_contact_by_name_surname_list.append(item)
-        return find_contact_by_name_surname_list
+        for person in self.phone_book:
+            if person.name == name and person.surname == surname:
+                find_contact_by_name_surname_list.append(person)
+        for contact in find_contact_by_name_surname_list:
+            print(contact)
+
 
 
 person_1 = Contact('Jhon', 'Smith', '+71234567809', telegram='@jhony', email='jhony@smith.com')
 person_2 = Contact('Иван', 'Федоров', '+71234561015', telegram='@ivan', email='ivan@fedorov.com')
-print(person_1)
-print(person_2)
+
 phonebook = PhoneBook("Коллеги")
-print(phonebook.add_contact(person_1))
-print(phonebook.add_contact(person_2))
-print(phonebook.display_contacts())
-print(phonebook.delete_contact('+71234567809'))
-print(phonebook.chosen_contact_search())
-print(phonebook.find_contact_by_name_surname("Иван", "Федоров"))
-
-
-
+phonebook.add_contact('Jhon', 'Smith', '+71234567809', telegram='@jhony', email='jhony@smith.com')
+phonebook.add_contact('Иван', 'Федоров', '+71234561015', telegram='@ivan', email='ivan@fedorov.com')
+phonebook.display_contacts()
+phonebook.delete_contact('+71234567809')
+phonebook.display_contacts()
+phonebook.chosen_contact_search()
+phonebook.find_contact_by_name_surname('Иван', 'Федоров')
